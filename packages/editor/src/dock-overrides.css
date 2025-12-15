@@ -1,0 +1,29 @@
+/* Sobrescribimos los estilos por defecto de rc-dock para que usen nuestras variables de tema */
+
+.dock-layout {
+  /* Fondo del layout cuando no hay paneles */
+  background-color: var(--dock-bg);
+}
+
+.dock-panel {
+  /* Fondo de cada panel individual */
+  background-color: var(--dock-bg);
+  color: var(--dock-panel-color);
+  border-color: var(--dock-border-color);
+}
+
+.dock-divider {
+  background-color: var(--dock-divider-bg);
+}
+
+.dock-tab {
+  background-color: var(--dock-tab-bg);
+  color: var(--dock-tab-color);
+  border-bottom: 1px solid var(--dock-border-color);
+}
+
+.dock-tab-active,
+.dock-tab:hover {
+  background-color: var(--dock-tab-active-bg);
+  color: var(--dock-tab-active-color);
+}

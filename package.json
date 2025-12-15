@@ -1,0 +1,23 @@
+{
+  "name": "uli2dge-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "tsc --build --watch",
+    "dev": "concurrently -k \"pnpm:build\" \"pnpm:dev:vite\" \"pnpm:dev:electron\"",
+    "dev:vite": "pnpm --filter @uli2dge/editor dev",
+    "dev:electron": "wait-on tcp:5173 && pnpm --filter @uli2dge/desktop-app start",
+    "lint": "eslint . --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "concurrently": "^9.2.0",
+    "eslint": "^9.31.0",
+    "eslint-config-prettier": "^9.1.0",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^8.38.0",
+    "wait-on": "^8.0.3"
+  }
+}

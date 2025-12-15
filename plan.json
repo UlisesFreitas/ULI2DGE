@@ -1,0 +1,94 @@
+{
+  "proyecto": "Motor de Videojuegos 2D (Nombre Provisional)",
+  "descripcion": "Un plan de desarrollo para crear un motor de videojuegos 2D y su editor visual, inspirado en ct.js, utilizando TypeScript, React, MUI y Pixi.js, empaquetado como una aplicación de escritorio con Electron.",
+  "plan": [
+    {
+      "id": "fase-0",
+      "nombre": "Fase 0: Arquitectura de la Aplicación de Escritorio",
+      "descripcion": "Establecer la estructura base de la aplicación de escritorio multiplataforma usando Electron como contenedor para la interfaz del editor (React).",
+      "componentes_clave": [
+        "Configuración del Monorepo",
+        "Paquete de Electron (Proceso Principal)",
+        "Integración con el paquete del Editor (Proceso de Renderizado)"
+      ]
+    },
+    {
+      "id": "fase-1",
+      "nombre": "Fase 1: Fundación del Motor (Runtime)",
+      "descripcion": "Crear el núcleo del motor que se encargará de renderizar y ejecutar la lógica del juego. El objetivo es poder ejecutar un juego simple mediante código, sin un editor visual.",
+      "componentes_clave": [
+        "Renderizador (Pixi.js)",
+        "Bucle de Juego (Game Loop)",
+        "Gestión de Escenas (Rooms)",
+        "Objetos de Juego (Game Objects / Copies)",
+        "Cargador de Assets Básico"
+      ]
+    },
+    {
+      "id": "fase-2",
+      "nombre": "Fase 2: Estructura del Editor (IDE)",
+      "descripcion": "Desarrollar la interfaz de usuario principal del editor utilizando React y MUI. En esta fase, la interfaz no estará conectada al motor, el foco es la estructura y los componentes visuales.",
+      "componentes_clave": [
+        "Layout Principal (Paneles, Menús)",
+        "Visor de Escena (Contenedor para Pixi.js)",
+        "Navegador de Assets",
+        "Panel de Propiedades",
+        "Gestión de Proyectos (Crear/Abrir)"
+      ]
+    },
+    {
+      "id": "fase-3",
+      "nombre": "Fase 3: Integración Editor-Motor",
+      "descripcion": "Conectar el editor visual con el motor. El objetivo es que las acciones en la UI (mover un objeto, cambiar una propiedad) se reflejen en la instancia del motor que se ejecuta en el visor de escena.",
+      "componentes_clave": [
+        "Comunicación Bidireccional (UI <-> Engine)",
+        "Manipulación Visual de Objetos",
+        "Edición de Propiedades en Tiempo Real",
+        "Visualización de Assets"
+      ]
+    },
+    {
+      "id": "fase-3-1",
+      "nombre": "Fase 3.1: Gestión de Proyectos",
+      "descripcion": "Implementar un flujo de trabajo de gestión de proyectos centrado en el usuario. La aplicación se iniciará en una pantalla de bienvenida para crear o abrir proyectos, en lugar de cargar directamente el editor. Esto establece un flujo de trabajo profesional y permite la persistencia de datos.",
+      "componentes_clave": [
+        "Pantalla de Bienvenida (Project Hub)",
+        "Gestión de estado del proyecto activo",
+        "Estructura de carpetas del proyecto"
+      ]
+    },
+    {
+      "id": "fase-4",
+      "nombre": "Fase 4: Lógica de Juego y Herramientas",
+      "descripcion": "Implementar las herramientas fundamentales que permiten a los usuarios crear la lógica y la interactividad del juego, como el sistema de plantillas (Templates) y la gestión de entradas.",
+      "componentes_clave": [
+        "Sistema de Plantillas (Templates/Prefabs)",
+        "Editor de Código Integrado (ej. Monaco Editor)",
+        "Sistema de Acciones (Input Mapping)",
+        "Cámara y Viewport"
+      ]
+    },
+    {
+      "id": "fase-5",
+      "nombre": "Fase 5: Funcionalidades Avanzadas y Extensibilidad",
+      "descripcion": "Añadir características más complejas como físicas, partículas y un sistema de módulos para permitir que el motor sea extensible.",
+      "componentes_clave": [
+        "Integración de Físicas (ej. Matter.js)",
+        "Sistema de Partículas",
+        "Gestor de Sonido Avanzado",
+        "Sistema de Módulos (Plugins)"
+      ]
+    },
+    {
+      "id": "fase-6",
+      "nombre": "Fase 6: Empaquetado y Distribución",
+      "descripcion": "Crear las herramientas para empaquetar tanto el editor como los juegos exportados. Generar instaladores para el editor (Windows, macOS, Linux) y exportadores para los juegos (HTML5).",
+      "componentes_clave": [
+        "Empaquetado del Editor (Electron Builder)",
+        "Sistema de Exportación de Juegos",
+        "Exportador a HTML5 (Build de Producción)",
+        "Optimización de Assets"
+      ]
+    }
+  ]
+}

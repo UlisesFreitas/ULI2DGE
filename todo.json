@@ -1,0 +1,493 @@
+{
+  "tareas": [
+    {
+      "id": "T000a",
+      "fase_id": "fase-0",
+      "componente": "Monorepo",
+      "titulo": "Configurar estructura del monorepo con pnpm",
+      "descripcion": "Crear la estructura de carpetas con los paquetes 'engine', 'editor' y 'desktop-app' y configurar pnpm-workspace.yaml.",
+      "estado": "Completada",
+      "prioridad": "Crítica",
+      "log_trabajo": [
+        "Creación de la estructura de carpetas (`/packages/engine`, `editor`, `desktop-app`).",
+        "Creación de `pnpm-workspace.yaml` para definir los workspaces.",
+        "Creación de los `package.json` para cada paquete, incluyendo el raíz.",
+        "Definición de las dependencias internas con `workspace:*`.",
+        "Configuración de TypeScript en cascada (`tsconfig.base.json`, `tsconfig.json` por paquete).",
+        "Implementación de `references` y `composite: true` para la compilación incremental.",
+        "Añadido script `build` en la raíz para compilar todo el proyecto."
+      ]
+    },
+    {
+      "id": "T000b",
+      "fase_id": "fase-0",
+      "componente": "DesktopApp",
+      "titulo": "Crear paquete de Electron y proceso principal",
+      "descripcion": "Configurar el paquete 'desktop-app' con Electron y crear el archivo main.ts que abre una ventana.",
+      "estado": "Completada",
+      "prioridad": "Crítica",
+      "log_trabajo": [
+        "Añadida la dependencia de `electron` al paquete `desktop-app`.",
+        "Creación del archivo del proceso principal `packages/desktop-app/src/main.ts` para abrir una `BrowserWindow`.",
+        "Añadido el script `start:desktop` en la raíz para facilitar la compilación y ejecución.",
+        "Corregido el `tsconfig.json` de `desktop-app` añadiendo `\"rootDir\": \"src\"` para asegurar la correcta estructura de archivos en la carpeta `dist`."
+      ]
+    },
+    {
+      "id": "T000c",
+      "fase_id": "fase-0",
+      "componente": "DesktopApp",
+      "titulo": "Integrar Vite con Electron para desarrollo",
+      "descripcion": "Configurar el script 'dev' para que lance el servidor de Vite del editor y luego la ventana de Electron que cargue la URL de Vite, permitiendo el desarrollo en caliente.",
+      "estado": "Completada",
+      "prioridad": "Crítica",
+      "log_trabajo": [
+        "Instaladas las dependencias de React, Vite, concurrently y wait-on.",
+        "Configurado el paquete 'editor' como una aplicación de React servida por Vite (index.html, vite.config.ts, App.tsx).",
+        "Modificado el proceso principal de Electron para cargar la URL de Vite en modo de desarrollo.",
+        "Creado el script 'dev' en la raíz que orquesta el build, el servidor de Vite y el lanzamiento de Electron.",
+        "Actualizado el script 'start' de 'desktop-app' para pasar la URL del servidor de Vite como argumento.",
+        "Solucionado conflicto de módulos (CommonJS/ESM) convirtiendo el paquete 'engine' a 'type: \"module\"'.",
+        "Creado el archivo `preload.ts` que faltaba en `desktop-app`.",
+        "Ajustada la configuración de `tsconfig.json` de `desktop-app` para asegurar la compilación del `preload.ts`.",
+        "Implementada la recarga en caliente del proceso principal de Electron con `nodemon`.",
+        "Añadido el tipado del puente de `preload` (`electron.d.ts`) para seguridad de tipos en el editor."
+      ]
+    },
+    {
+      "id": "T001",
+      "fase_id": "fase-1",
+      "componente": "Engine",
+      "titulo": "Configurar proyecto TypeScript para el motor",
+      "descripcion": "Inicializar un proyecto con TypeScript, ESLint, y Prettier para el núcleo del motor.",
+      "estado": "Completada",
+      "prioridad": "Alta",
+      "log_trabajo": [
+        "Instaladas las dependencias de desarrollo para ESLint y Prettier en la raíz del monorepo.",
+        "Migrada la configuración de ESLint al nuevo formato 'flat config' (`eslint.config.js`) para compatibilidad con ESLint v9.",
+        "Creado el archivo de configuración `.prettierrc.json` en la raíz.",
+        "Añadidos los scripts `lint` y `format` al `package.json` raíz para ejecutar las herramientas en todo el proyecto."
+      ]
+    },
+    {
+      "id": "T002",
+      "fase_id": "fase-1",
+      "componente": "Renderer",
+      "titulo": "Integrar Pixi.js y crear el Renderer",
+      "descripcion": "Crear una clase 'Renderer' que inicialice y gestione la aplicación de Pixi.js y el canvas.",
+      "estado": "Completada",
+      "prioridad": "Alta",
+      "log_trabajo": [
+        "Añadida la dependencia de `pixi.js` al paquete `engine`.",
+        "Creada la clase `Renderer` en el paquete `engine` para encapsular la inicialización de la aplicación de Pixi.js.",
+        "Exportada la clase `Renderer` desde el punto de entrada del paquete `engine`.",
+        "Integrado el `Renderer` en el componente `App.tsx` del editor, mostrando el canvas de Pixi.js en la ventana.",
+        "Añadida una función de limpieza en `useEffect` para destruir la instancia de Pixi.js y prevenir fugas de memoria."
+      ]
+    },
+    {
+      "id": "T003",
+      "fase_id": "fase-1",
+      "componente": "Engine",
+      "titulo": "Implementar el Bucle de Juego (Game Loop)",
+      "descripcion": "Crear el bucle principal que actualizará la lógica y renderizará cada frame (update/draw).",
+      "estado": "Completada",
+      "prioridad": "Alta",
+      "log_trabajo": [
+        "Añadidos los métodos `addToLoop` y `removeFromLoop` a la clase `Renderer` para gestionar el `Ticker` de Pixi.js.",
+        "El método `init` del `Renderer` ahora inicia automáticamente el bucle de juego (`app.start()`).",
+        "Añadida la dependencia de `pixi.js` al paquete `editor`.",
+        "Implementada una demostración en `App.tsx` con un `Graphics` (cuadrado) que se añade al stage.",
+        "La lógica de rotación del cuadrado se añade al bucle de juego usando `addToLoop`, demostrando un `update` exitoso en cada frame."
+      ]
+    },
+    {
+      "id": "T004",
+      "fase_id": "fase-1",
+      "componente": "Engine",
+      "titulo": "Crear clase base 'GameObject'",
+      "descripcion": "Definir la clase base para todos los objetos del juego, con propiedades de transformación (x, y, scale, rotation) y métodos de ciclo de vida (onCreate, onUpdate, onDestroy).",
+      "estado": "Completada",
+      "prioridad": "Alta",
+      "log_trabajo": [
+        "Creada la clase abstracta `GameObject` en `packages/engine/src/GameObject.ts`.",
+        "La clase `GameObject` encapsula un `DisplayObject` de Pixi.js para su representación visual.",
+        "Implementados getters/setters para las propiedades de transformación (`x`, `y`, `rotation`) que delegan en el `DisplayObject` subyacente.",
+        "Definidos los métodos de ciclo de vida `_create`, `_update` y `_destroy` para ser sobreescritos por las subclases.",
+        "Refactorizado `App.tsx` para usar una nueva clase `Square` que hereda de `GameObject`, demostrando la nueva abstracción.",
+        "La lógica de actualización ahora reside en el método `_update` de la clase `Square`."
+      ]
+    },
+    {
+      "id": "T005",
+      "fase_id": "fase-1",
+      "componente": "Engine",
+      "titulo": "Crear clase 'Scene' (Room)",
+      "descripcion": "Clase para gestionar una colección de GameObjects, y manejar el cambio entre escenas.",
+      "estado": "Completada",
+      "prioridad": "Media",
+      "log_trabajo": [
+        "Creada la clase `Scene` en `packages/engine/src/Scene.ts` para gestionar colecciones de GameObjects.",
+        "La clase `Scene` tiene su propio `Container` de Pixi.js para agrupar los elementos visuales.",
+        "Implementados los métodos `addGameObject`, `removeGameObject`, `_update` y `_destroy` en la clase `Scene`.",
+        "Refactorizada la clase `Renderer` para que gestione una escena activa (`currentScene`).",
+        "El bucle de juego del `Renderer` ahora delega la lógica de actualización al método `_update` de la escena activa.",
+        "Refactorizado `App.tsx` para instanciar una `Scene`, añadirle un `GameObject` y establecerla como la escena activa en el `Renderer`."
+      ]
+    },
+    {
+      "id": "T007",
+      "fase_id": "fase-2",
+      "componente": "Editor",
+      "titulo": "Integrar MUI y configurar tema base",
+      "descripcion": "Añadir Material-UI al proyecto y definir un tema (colores, tipografía) para el editor.",
+      "estado": "Completada",
+      "prioridad": "Alta",
+      "log_trabajo": [
+        "Añadidas las dependencias de MUI (`@mui/material`, `@emotion/react`, `@emotion/styled`) al paquete `editor`.",
+        "Creado un archivo `theme.ts` para definir un tema oscuro base para la aplicación.",
+        "Integrado el tema en `App.tsx` usando `ThemeProvider` de MUI.",
+        "Añadido `CssBaseline` para normalizar los estilos del navegador y aplicar el color de fondo del tema."
+      ]
+    },
+    {
+      "id": "T008",
+      "fase_id": "fase-2",
+      "componente": "Editor",
+      "titulo": "Diseñar el Layout principal con RC-Dock",
+      "descripcion": "Integrar RC-Dock para crear la estructura de paneles acoplables y redimensionables: Navegador de Assets (izquierda), Visor de Escena (centro), Panel de Propiedades (derecha).",
+      "estado": "Completada",
+      "prioridad": "Alta",
+      "log_trabajo": [
+        "Añadida la dependencia de `rc-dock` al paquete `editor`.",
+        "Importados los estilos CSS de `rc-dock` en `main.tsx`.",
+        "Refactorizado `App.tsx` para desacoplar la creación de la escena del `SceneView`.",
+        "Implementado `ResizeObserver` en `SceneView` para que el canvas se redimensione automáticamente al tamaño de su panel.",
+        "Definido un `defaultLayout` con la estructura de paneles inicial (Assets, Hierarchy, Scene, Console, Properties).",
+        "Creado el componente `SceneView` para encapsular la lógica de renderizado de Pixi.js.",
+        "Creado un `PlaceholderPanel` para el contenido de los otros paneles."
+      ]
+    },
+    {
+      "id": "T008a",
+      "fase_id": "fase-2",
+      "componente": "Editor",
+      "titulo": "Crear componente ErrorBoundary para paneles",
+      "descripcion": "Implementar un componente de clase ErrorBoundary reutilizable para envolver los paneles del layout y prevenir que un error en un panel bloquee toda la aplicación.",
+      "estado": "Completada",
+      "prioridad": "Alta",
+      "log_trabajo": [
+        "Creado el componente de clase `ErrorBoundary.tsx` con los métodos `getDerivedStateFromError` y `componentDidCatch`.",
+        "Envueltos los paneles de `Assets`, `Hierarchy` y `Properties` en el `ErrorBoundary` para aislarlos de posibles errores de renderizado.",
+        "Creado un `BuggyComponent.tsx` para probar el funcionamiento del ErrorBoundary.",
+        "Verificado que un error en un panel es capturado y se muestra una UI de respaldo sin bloquear la aplicación.",
+        "Mejorada la UI de respaldo del ErrorBoundary con componentes de MUI para una mejor integración visual."
+      ]
+    },
+    {
+      "id": "T009",
+      "fase_id": "fase-2",
+      "componente": "Editor",
+      "titulo": "Implementar Contexto Global y Panel de Jerarquía",
+      "descripcion": "Crear un Contexto de React para proveer acceso global al Renderer y la Scene. Implementar una versión básica del panel de Jerarquía que liste los GameObjects de la escena actual.",
+      "estado": "Completada",
+      "prioridad": "Alta",
+      "log_trabajo": [
+        "Creado `EditorContext.tsx` para proveer las instancias de `Renderer` y `Scene` a toda la aplicación.",
+        "Refactorizado `App.tsx` y `main.tsx` para usar el nuevo `EditorProvider`.",
+        "Refactorizado `SceneView.tsx` para consumir el contexto en lugar de recibir props.",
+        "Creado el componente `HierarchyPanel.tsx` que consume el contexto para listar los `GameObject`s de la escena.",
+        "Corregido un bug de recursión infinita en el getter `gameObjects` de la clase `Scene`."
+      ]
+    },
+    {
+      "id": "T009a",
+      "fase_id": "fase-2",
+      "componente": "Editor",
+      "titulo": "Crear Menú Principal Personalizado",
+      "descripcion": "Implementar una barra de menú principal en la parte superior de la aplicación usando componentes de MUI. El menú nativo de Electron será deshabilitado para tener un control total sobre la UI.",
+      "estado": "Completada",
+      "prioridad": "Alta",
+      "log_trabajo": [
+        "Deshabilitado el menú nativo de Electron en `main.ts`.",
+        "Creado el componente `MainMenu.tsx` con la estructura del menú.",
+        "Implementada la comunicación IPC para que el botón 'Exit' cierre la aplicación.",
+        "Creado un componente `AboutDialog.tsx` para el menú 'Help'.",
+        "Implementada la función 'Reset Layout' usando una ref en `App.tsx` para llamar a `loadLayout` de rc-dock."
+      ]
+    },
+    {
+      "id": "T010",
+      "fase_id": "fase-3",
+      "componente": "Editor",
+      "titulo": "Seleccionar objetos en el SceneView",
+      "descripcion": "Implementar la lógica para que al hacer clic en un objeto en el canvas, se seleccione y se muestren sus datos en el Panel de Propiedades.",
+      "estado": "Completada",
+      "prioridad": "Alta",
+      "log_trabajo": [
+        "Añadido un ID único a cada GameObject para una identificación estable.",
+        "Ampliado el EditorContext para gestionar el estado del 'selectedGameObject'.",
+        "Implementada la lógica para que al hacer clic en un GameObject en el SceneView, este se seleccione globalmente.",
+        "Implementada la deselección al hacer clic en el fondo del SceneView.",
+        "Actualizado el HierarchyPanel para resaltar el objeto seleccionado.",
+        "Añadida la funcionalidad de seleccionar un objeto haciendo clic en su entrada en el HierarchyPanel."
+      ]
+    },
+    {
+      "id": "T010a",
+      "fase_id": "fase-3",
+      "componente": "Editor",
+      "titulo": "Añadir GameObjects desde el Menú del Editor",
+      "descripcion": "Añadir un menú 'GameObject' a la barra principal que permita crear y añadir nuevos GameObjects (empezando con un 'Square') a la escena activa. Esto requiere que el EditorContext gestione el estado de la escena para que la UI (como el panel de Jerarquía) se actualice automáticamente.",
+      "estado": "Pendiente",
+      "prioridad": "Alta"
+    },
+    {
+      "id": "T010b",
+      "fase_id": "fase-3",
+      "componente": "Editor",
+      "titulo": "Revisar y refactorizar TransformGizmo",
+      "descripcion": "El enfoque actual de crear y destruir el gizmo constantemente no es óptimo. Refactorizar el TransformGizmo para que sea un objeto persistente que se actualiza y se muestra/oculta según sea necesario, en lugar de recrearlo en cada selección. Esto mejorará el rendimiento y la gestión del estado.",
+      "estado": "Pendiente",
+      "prioridad": "Alta"
+    },
+    {
+      "id": "T011",
+      "fase_id": "fase-3",
+      "componente": "Editor",
+      "titulo": "Modificar propiedades del objeto desde la UI",
+      "descripcion": "Conectar los inputs del Panel de Propiedades para que al cambiar un valor (ej. posición X), se actualice el GameObject correspondiente en el motor.",
+      "estado": "Completada",
+      "prioridad": "Alta",
+      "log_trabajo": [
+        "Añadidas las propiedades `scaleX` y `scaleY` a la clase base `GameObject`.",
+        "Creado el componente `PropertiesPanel.tsx` para mostrar y editar las propiedades del objeto seleccionado.",
+        "El panel consume `selectedGameObject` y `gameObjectVersion` del `EditorContext` para mantenerse sincronizado.",
+        "Los cambios en los campos de texto del panel actualizan las propiedades del objeto en tiempo real y llaman a `updateSelectedGameObject` para notificar a otros componentes (como el gizmo).",
+        "Integrado el `PropertiesPanel` en el `DockLayout` principal, reemplazando el marcador de posición."
+      ]
+    },
+    {
+      "id": "T011a",
+      "fase_id": "fase-3",
+      "componente": "Editor",
+      "titulo": "Mejorar Gizmos de Transformación (Movimiento)",
+      "descripcion": "Mejorar el gizmo de movimiento actual. Hacer que el gizmo rote con el objeto para que los ejes siempre estén alineados con el objeto. Añadir un cuadrado en el centro para permitir el movimiento libre en ambos ejes simultáneamente.",
+      "estado": "Pendiente",
+      "prioridad": "Media"
+    },
+    {
+      "id": "T011b",
+      "fase_id": "fase-3",
+      "componente": "Editor",
+      "titulo": "Añadir Gizmos de Rotación y Escala",
+      "descripcion": "Implementar nuevos gizmos visuales para la rotación y la escala del GameObject seleccionado. La escala se maneja con cuadrados en los bordes y la rotación con círculos en las esquinas.",
+      "estado": "Completada",
+      "prioridad": "Media",
+      "log_trabajo": [
+        "Añadidos selectores de escala en los bordes y esquinas del objeto.",
+        "Implementada la lógica de escalado, incluyendo el escalado proporcional con la tecla Shift.",
+        "Añadidos selectores de rotación circulares en las esquinas, con un padding mayor.",
+        "Implementada la lógica de rotación calculando el ángulo entre el centro del objeto y la posición del ratón."
+      ]
+    },
+    {
+      "id": "T011b1",
+      "fase_id": "fase-3",
+      "componente": "Editor",
+      "titulo": "Implementar selector de punto de origen (Origin Point) para GameObjects",
+      "descripcion": "Añadir un control en el panel de propiedades que permita al usuario cambiar el punto de origen (pivote) de un GameObject. Las opciones deben ser las estándar: top-left, top-center, top-right, center-left, center, center-right, bottom-left, bottom-center, bottom-right. Cambiar el origen afectará cómo el objeto rota y escala.",
+      "estado": "Completada",
+      "prioridad": "Media",
+      "log_trabajo": [
+        "Integrado el componente OriginSelector en el PropertiesPanel existente.",
+        "Añadida la lógica en PropertiesPanel para llamar al método setAnchor del GameObject seleccionado y actualizar la vista.",
+        "Mejorado el campo de rotación en el panel para mostrar y aceptar valores en grados en lugar de radianes."
+      ]
+    },
+    {
+      "id": "T011c",
+      "fase_id": "fase-3",
+      "componente": "Editor",
+      "titulo": "Implementar sistema de Play/Stop Mode",
+      "descripcion": "Añadir una barra de herramientas con botones de Play/Stop que controlen si el bucle de actualización de la escena (`scene._update`) se ejecuta o no. Por defecto, el editor arrancará en modo 'Stop' (Edición).",
+      "estado": "Completada",
+      "prioridad": "Alta",
+      "log_trabajo": [
+        "Añadido el componente EditorToolbar a la UI principal en un nuevo componente App.tsx.",
+        "Implementada la lógica en EditorContext para guardar el estado de las transformaciones de los GameObjects al entrar en Play Mode.",
+        "Implementada la restauración del estado de la escena al salir de Play Mode y volver a Edit Mode.",
+        "Los Gizmos de transformación ahora se ocultan automáticamente al entrar en Play Mode.",
+        "La selección de GameObjects en la SceneView se deshabilita durante el Play Mode.",
+        "Corregido un bug en la restauración de estado que causaba un posicionamiento incorrecto de los objetos al cambiar el punto de origen."
+      ]
+    },
+    {
+      "id": "T011b2",
+      "fase_id": "fase-3",
+      "componente": "Editor",
+      "titulo": "Implementar Panning y Zoom en la SceneView",
+      "descripcion": "Añadir la capacidad de navegar por la escena. El paneo se realizará manteniendo presionado el botón central del ratón y arrastrando. El zoom se controlará con la rueda del ratón. La barra de herramientas del editor mostrará el nivel de zoom actual y tendrá botones para acercar y alejar.",
+      "estado": "Completada",
+      "prioridad": "Media",
+      "log_trabajo": [
+        "Añadido estado para 'zoom' y 'pan' al EditorContext.",
+        "Implementados listeners de eventos en SceneView para el paneo con el botón central del ratón y el zoom con la rueda.",
+        "La escena ahora se desplaza y escala según el estado del contexto.",
+        "Añadidos controles de zoom (+, -, %) a la EditorToolbar.",
+        "Implementada la lógica en TransformGizmo para que mantenga un tamaño constante en pantalla independientemente del nivel de zoom de la escena.",
+        "Corregido un bug en el cálculo de la escala inversa del gizmo."
+      ]
+    },
+    {
+      "id": "T011b3",
+      "fase_id": "fase-3",
+      "componente": "Editor",
+      "titulo": "Seleccionar GameObject haciendo clic en la SceneView",
+      "descripcion": "Implementar la funcionalidad para que un GameObject pueda ser seleccionado directamente haciendo clic sobre su representación visual en la SceneView, además de la selección a través del panel de Jerarquía.",
+      "estado": "Completada",
+      "prioridad": "Alta",
+      "log_trabajo": [
+        "Corregido un bug donde el TransformGizmo, incluso oculto, interceptaba los clics del ratón, impidiendo la selección de objetos. Se ha hecho que el gizmo sea no-interactivo por defecto y solo se active cuando está visible.",
+        "Corregido un bug en SceneView.tsx donde el efecto que añade los listeners de selección no se ejecutaba al añadir nuevos GameObjects. Se ha cambiado su dependencia de 'gameObjectVersion' a 'sceneVersion'.",
+        "Corregido un bug en HierarchyPanel.tsx que no se actualizaba al añadir nuevos GameObjects. Ahora consume 'sceneVersion' para forzar su re-renderizado.",
+        "La selección de GameObjects en la escena ahora funciona de manera robusta y consistente."
+      ]
+    },
+    {
+      "id": "T011b4",
+      "fase_id": "fase-3",
+      "componente": "Editor",
+      "titulo": "Mostrar grid en SceneView y snap-to-grid",
+      "descripcion": "Implementar una rejilla visual en la SceneView para ayudar con el posicionamiento. Al mover un GameObject, este debe ajustarse (hacer 'snap') a los puntos de la rejilla.",
+      "estado": "Completada",
+      "prioridad": "Media",
+      "log_trabajo": [
+        "Añadido un 'backgroundContainer' a la clase Scene para alojar elementos de fondo como la rejilla.",
+        "Implementado un efecto en SceneView que dibuja una rejilla dinámica usando PIXI.Graphics.",
+        "La rejilla se redibuja y ajusta correctamente al hacer pan y zoom en la escena.",
+        "El grosor de las líneas de la rejilla se ajusta inversamente al zoom para mantener una apariencia consistente.",
+        "Añadido estado para 'gridSize' y 'snapToGrid' al EditorContext.",
+        "Creado el componente EditorToolbar con controles para el tamaño de la rejilla y un interruptor para el snap.",
+        "Implementada la lógica de 'snap-to-grid' en el TransformGizmo al mover un objeto."
+      ]
+    },
+    {
+      "id": "T011c1",
+      "fase_id": "fase-3-1",
+      "componente": "Editor",
+      "titulo": "Crear el componente de la Pantalla de Bienvenida (Project Hub)",
+      "descripcion": "Diseñar y crear un nuevo componente de React que sirva como pantalla de bienvenida. Debe contener un panel central con botones grandes para 'Nuevo Proyecto' y 'Abrir Proyecto', y un panel lateral donde se listarán los proyectos recientes (inicialmente vacío).",
+      "estado": "Pendiente",
+      "prioridad": "Crítica"
+    },
+    {
+      "id": "T011c2",
+      "fase_id": "fase-3-1",
+      "componente": "Editor",
+      "titulo": "Implementar la lógica de estado para mostrar el Hub o el Editor",
+      "descripcion": "Modificar App.tsx y el EditorContext para gestionar un estado de 'proyecto activo'. Si no hay un proyecto activo, se debe renderizar la Pantalla de Bienvenida. Si hay un proyecto activo, se debe renderizar la interfaz completa del editor (el DockLayout).",
+      "estado": "Pendiente",
+      "prioridad": "Crítica"
+    },
+    {
+      "id": "T011d",
+      "fase_id": "fase-3-1",
+      "componente": "Editor",
+      "titulo": "Crear Nuevo Proyecto (File -> New Project)",
+      "descripcion": "Implementar la funcionalidad del botón 'Nuevo Proyecto' en la pantalla de bienvenida. Al hacer clic, se abrirá un diálogo para que el usuario elija una carpeta. Se creará la estructura de directorios (Assets/, etc.) y un archivo 'project.uli2dge'. Tras la creación, el estado de la aplicación cambiará para mostrar el editor con el nuevo proyecto cargado.",
+      "estado": "Pendiente",
+      "prioridad": "Crítica"
+    },
+    {
+      "id": "T011e",
+      "fase_id": "fase-3-1",
+      "componente": "Editor",
+      "titulo": "Abrir Proyecto Existente (File -> Open Project)",
+      "descripcion": "Implementar la funcionalidad del botón 'Abrir Proyecto'. Abrirá un diálogo para seleccionar un archivo 'project.uli2dge'. Al seleccionarlo, el editor cargará el estado del proyecto desde el archivo y cambiará la vista de la pantalla de bienvenida a la del editor principal.",
+      "estado": "Pendiente",
+      "prioridad": "Crítica"
+    },
+    {
+      "id": "T011f",
+      "fase_id": "fase-3-1",
+      "componente": "Editor",
+      "titulo": "Guardar Proyecto (File -> Save Project)",
+      "descripcion": "Implementar la opción de menú 'File -> Save Project' dentro del editor. Esta acción debe serializar el estado actual de la escena (GameObjects, propiedades, etc.) y guardarlo en el archivo 'project.uli2dge' del proyecto activo.",
+      "estado": "Pendiente",
+      "prioridad": "Crítica"
+    },
+    {
+      "id": "T011g",
+      "fase_id": "fase-3-1",
+      "componente": "Editor",
+      "titulo": "Implementar lista de Proyectos Recientes",
+      "descripcion": "Guardar la ruta de los proyectos abiertos exitosamente en el almacenamiento local del usuario. Leer esta lista al iniciar la aplicación y mostrarla en el panel lateral de la pantalla de bienvenida. Hacer clic en un proyecto reciente debe abrirlo directamente.",
+      "estado": "Pendiente",
+      "prioridad": "Media"
+    },
+    {
+      "id": "T011h",
+      "fase_id": "fase-3-1",
+      "componente": "Editor",
+      "titulo": "Implementar 'Cerrar Proyecto'",
+      "descripcion": "Añadir una opción de menú 'File -> Close Project'. Al seleccionarla, se debe limpiar el estado del proyecto activo en la aplicación y volver a mostrar la Pantalla de Bienvenida.",
+      "estado": "Pendiente",
+      "prioridad": "Media"
+    },
+    {
+      "id": "T012",
+      "fase_id": "fase-4",
+      "componente": "Editor",
+      "titulo": "Implementar guardado/restauración de estado para Play Mode",
+      "descripcion": "Al entrar en Play Mode, guardar el estado actual de la escena. Al salir de Play Mode, restaurar la escena a su estado guardado, descartando cualquier cambio realizado durante la simulación. Esto previene guardar accidentalmente cambios de runtime.",
+      "estado": "Pendiente",
+      "prioridad": "Media"
+    },
+    {
+      "id": "T013",
+      "fase_id": "fase-4",
+      "componente": "Engine",
+      "titulo": "Implementar sistema de Plantillas (Templates)",
+      "descripcion": "Crear un sistema que permita definir plantillas de GameObjects que puedan ser instanciadas múltiples veces en las escenas.",
+      "estado": "Pendiente",
+      "prioridad": "Alta"
+    },
+    {
+      "id": "T014",
+      "fase_id": "fase-4",
+      "componente": "Editor",
+      "titulo": "Integrar Monaco Editor para scripting",
+      "descripcion": "Añadir el editor de Mónaco (el de VSCode) en un panel para escribir el código de los GameObjects, con resaltado de sintaxis para TypeScript/JavaScript.",
+      "estado": "Pendiente",
+      "prioridad": "Media"
+    },
+    {
+      "id": "T015",
+      "fase_id": "fase-4",
+      "componente": "Engine",
+      "titulo": "Sistema de Acciones de Input",
+      "descripcion": "Crear un gestor que permita definir acciones ('moverseIzquierda', 'saltar') y mapearlas a diferentes teclas o botones del gamepad.",
+      "estado": "Pendiente",
+      "prioridad": "Media"
+    },
+    {
+      "id": "T016",
+      "fase_id": "fase-5",
+      "componente": "Engine",
+      "titulo": "Integrar un motor de físicas 2D",
+      "descripcion": "Añadir Matter.js (o similar) y crear componentes de físicas (RigidBody, Collider) que se puedan añadir a los GameObjects.",
+      "estado": "Pendiente",
+      "prioridad": "Media"
+    },
+    {
+      "id": "T017",
+      "fase_id": "fase-6",
+      "componente": "Packaging",
+      "titulo": "Configurar Electron Builder para empaquetar el editor",
+      "descripcion": "Añadir y configurar Electron Builder para generar los instaladores de la aplicación de escritorio (.exe, .dmg, .AppImage).",
+      "estado": "Pendiente",
+      "prioridad": "Media"
+    }
+  ]
+}

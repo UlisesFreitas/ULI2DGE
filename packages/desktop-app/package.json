@@ -1,0 +1,15 @@
+{
+  "name": "@uli2dge/desktop-app",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/main.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "dependencies": {
+    "@uli2dge/editor": "workspace:*"
+  },
+  "devDependencies": {
+    "electron": "^37.2.3"
+  }
+}
